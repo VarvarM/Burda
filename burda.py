@@ -163,5 +163,4 @@ def left_mouse_click(x, y):
 
 Screen().onclick(left_mouse_click)
 listen()
-
 done()
