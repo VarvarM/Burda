@@ -1,5 +1,6 @@
 from turtle import *
 from random import *
+from math import *
 
 scr = Screen()
 scr.register_shape(name='seven.gif')
@@ -274,7 +275,7 @@ def left_mouse_click(x, y):  # нажатия мыши: спин, ставка, 
         Screen().listen()
     if 220 <= x <= 350 and -240 <= y <= -160 and not action:
         rectangle(-160, 260, 600, 100, 'white')
-        percent_win = int((float(balance/100)-1)*100)
+        percent_win = ceil((balance/100-1)*100)
         if percent_win > 0:
             percent_win = '+' + str(percent_win)
         goto(-240, 260)
@@ -291,13 +292,9 @@ def streamer_mode(): # режим стримера
     global streamer
     if not action:
         if streamer:
-            pu()
-            rectangle(200, 100, 10, 10, 'red')
             streamer = False
             return 0
         else:
-            pu()
-            rectangle(200, 100, 10, 10, 'green')
             streamer = True
 
 
