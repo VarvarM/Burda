@@ -185,6 +185,12 @@ def slot(sp, left_ryad, center_ryad, right_ryad):  # спин
 ht()
 speed(0)
 pu()
+goto(-450, -320)
+write(
+    'Крутить на пробел. Можно изменить скорость и ставку, нажав на соответствующее поле\nили на кнопки b(bet/ставка) и s(speed/скорость).\nКнопка Вывоз заканчивает игру. Приятной бурды!',
+    font=('aerial', 15, 'normal'))
+
+pu()
 goto(-210, -250)
 pd()
 goto(-210, 250)
@@ -249,7 +255,7 @@ def left_mouse_click(x, y):  # нажатия мыши: спин, ставка, 
     global balance
     if 285 <= x <= 385 and 50 <= y <= 150 and not action:
         global auto_spin
-        ceil_spins = int(int(balance)/int(bet))
+        ceil_spins = int(int(balance) / int(bet))
         auto_spin = numinput('Автоспины', 'Введите количество спинов:\n По умалочанию 1', 1, 1, ceil_spins)
         while auto_spin == None:
             auto_spin = numinput('Автоспины', 'Введите количество спинов:\n По умалочанию 1', 1, 1, ceil_spins)
@@ -275,7 +281,7 @@ def left_mouse_click(x, y):  # нажатия мыши: спин, ставка, 
         Screen().listen()
     if 220 <= x <= 350 and -240 <= y <= -160 and not action:
         rectangle(-160, 260, 600, 100, 'white')
-        percent_win = ceil((balance/100-1)*100)
+        percent_win = round((balance / 100 - 1) * 100)
         if percent_win > 0:
             percent_win = '+' + str(percent_win)
         goto(-240, 260)
@@ -288,7 +294,32 @@ def space_click():  # спин через пробел
         slot(shapes, l_t, c_t, r_t)
 
 
-def streamer_mode(): # режим стримера
+def speed_button():  # изменить скорость
+    if not action:
+        global speedy
+        speedy = numinput('Скорость',
+                          'Выберите скорость автомата:\n1 - самая медленная\n10 - быстрая\n0 - моментальная\nПо '
+                          'умолчанию скорость 3', 3, 0, 10)
+        while speedy == None:
+            speedy = numinput('Скорость',
+                              'Выберите скорость автомата:\n1 - самая медленная\n10 - быстрая\n0 - моментальная\nПо '
+                              'умолчанию скорость 3', 3, 0, 10)
+    Screen().listen()
+
+
+def bet_button():  # изменить ставку
+    if not action:
+        bet = numinput('Ставка',
+                       'Выберите ставку автомата:\nПо '
+                       'умолчанию ставка 1', 1, 1, int(balance))
+        while bet == None:
+            bet = numinput('Ставка',
+                           'Выберите ставку автомата:\nПо '
+                           'умолчанию ставка 1', 1, 1, int(balance))
+        Screen().listen()
+
+
+def streamer_mode():  # режим стримера
     global streamer
     if not action:
         if streamer:
@@ -299,6 +330,8 @@ def streamer_mode(): # режим стримера
 
 
 Screen().onkey(space_click, 'space')
-Screen().onkey(streamer_mode, 's')
+Screen().onkey(speed_button, 's')
+Screen().onkey(bet_button, 'b')
+Screen().onkey(streamer_mode, 't')
 Screen().onclick(left_mouse_click)
 done()
