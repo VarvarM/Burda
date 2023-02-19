@@ -309,6 +309,7 @@ def speed_button():  # изменить скорость
 
 def bet_button():  # изменить ставку
     if not action:
+        global bet
         bet = numinput('Ставка',
                        'Выберите ставку автомата:\nПо '
                        'умолчанию ставка 1', 1, 1, int(balance))
